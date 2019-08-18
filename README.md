@@ -5,7 +5,7 @@ This is a small python script showing three methods to align images using OpenCV
 You can grab the example code as well as two example images from this repo by cloning it using:
 
 ```bash
-git clone image registration
+git clone https://github.com/khufkens/align_images.git
 ```
 
 A worked example with the included images is given below.
