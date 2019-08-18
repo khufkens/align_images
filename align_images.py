@@ -6,12 +6,6 @@ import cv2
 import numpy as np
 from numpy.fft import fft2, ifft2, fftshift
 
-# set TF log level (suppress verbose output)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
-# ignore python warnings
-warnings.simplefilter("ignore")
-
 # argument parser
 def getArgs():
 
@@ -33,7 +27,7 @@ def getArgs():
 
    parser.add_argument('-m',
                        '--mode',
-                       help = 'feature or transform based',
+                       help = 'registation mode: translation, ecc or feature',
                        default = 'feature')
 
    parser.add_argument('-mf',

@@ -1,6 +1,6 @@
 ## Introduction
 
-This is a small python script showing three methods to align images using OpenCV or standard python based code. Personally I've used all three techniques in various projects, in particular to align images taken by separate raspberry pi with different spectral responses.
+This is a small python script showing three methods to align images using OpenCV or standard python based code. Personally I've used all three techniques in various projects, in particular to align images taken by separate raspberry pi cameras with different spectral responses (i.e. filters).
 
 You can grab the example code as well as two example images from this repo by cloning it using:
 
@@ -36,7 +36,7 @@ The default settings on the script will call the feature based alignment method 
 ./align_images.py -im1 rgb_image.jpg -im2 nir_image.jpg -m feature
 ```
 
-This routine will calculate and output an aligned image and print the transformation matrix to the console.
+This routine will calculate and output an aligned image and print the transformation matrix to the console. For phase correlation only the offsets (x,y) are returned, no corrected image is provided.
 
 ```bash
 [[ 9.28381660e-01  2.04421105e-02  7.46501803e+01]
