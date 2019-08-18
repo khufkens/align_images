@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Import necessary libraries.
-import os, argparse, warnings
+import os, argparse
 import cv2
 import numpy as np
 from numpy.fft import fft2, ifft2, fftshift

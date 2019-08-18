@@ -10,6 +10,11 @@ git clone image registration
 
 A worked example with the included images is given below.
 
+Required python packages include:
+
+- OpenCV
+- numpy
+
 ## Methods
 
 The script includes three different methods for calculating image registration / alignment transformation information.
