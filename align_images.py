@@ -52,6 +52,26 @@ def getArgs():
 
    return parser.parse_args()
 
+def rotationAlign(im1, im2):
+
+    # Convert images to grayscale
+    im1_gray = cv2.cvtColor(im1,cv2.COLOR_BGR2GRAY)
+    im2_gray = cv2.cvtColor(im2,cv2.COLOR_BGR2GRAY)
+    height, width = im1_gray.shape[0:2]
+    
+    values = np.ones(360)
+    
+    for i in range(0,360):
+      rotationMatrix = cv2.getRotationMatrix2D((width/2, height/2), i, 1)
+      rot = cv2.warpAffine(im2_red, rotationMatrix, (width, height))
+      values[i] = np.mean(im1_gray - rot)
+    
+    rotationMatrix = cv2.getRotationMatrix2D((width/2, height/2), np.argmin(values), 1)
+    rotated = cv2.warpAffine(im2, rotationMatrix, (width, height))
+    
+    return rotated, rotationMatrix
+      
+
 # Enhanced Correlation Coefficient (ECC) Maximization
 def eccAlign(im1,im2):
 
@@ -63,7 +83,7 @@ def eccAlign(im1,im2):
     sz = im1.shape
 
     # Define the motion model
-    warp_mode = cv2.MOTION_AFFINE
+    warp_mode = cv2.MOTION_EUCLIDEAN
 
     # Define 2x3 or 3x3 matrices and initialize the matrix to identity
     if warp_mode == cv2.MOTION_HOMOGRAPHY :
@@ -76,7 +96,7 @@ def eccAlign(im1,im2):
      number_of_iterations,  termination_eps)
 
     # Run the ECC algorithm. The results are stored in warp_matrix.
-    (cc, warp_matrix) = cv2.findTransformECC (im1_gray,im2_gray,warp_matrix, warp_mode, criteria)
+    (cc, warp_matrix) = cv2.findTransformECC (im1_gray, im2_gray, warp_matrix, warp_mode, criteria)
 
     if warp_mode == cv2.MOTION_HOMOGRAPHY :
         # Use warpPerspective for Homography 
@@ -183,6 +203,12 @@ if __name__ == '__main__':
     aligned,
     [cv2.IMWRITE_JPEG_QUALITY, 90])
    print(warp_matrix)
+  elif args.mode == "rotation":
+   rotated, rotationMatrix = rotationAlign(im1, im2)
+   cv2.imwrite("reg_image.jpg",
+    rotated,
+    [cv2.IMWRITE_JPEG_QUALITY, 90])
+   print(rotationMatrix)
   else:
    warp_matrix = translation(im1, im2)
    print(warp_matrix)
